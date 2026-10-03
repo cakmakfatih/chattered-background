@@ -20,19 +20,22 @@ Tasks are delivered at least once, so handlers that perform side effects should 
 
 ## Local development
 
-Set `REDIS_ADDR` and `REDIS_PASSWORD` in the environment, then run:
+In a Chattered checkout, local development uses the root `.env.dev` file for `REDIS_ADDR` and `REDIS_PASSWORD`. Keep that file outside this submodule and do not commit its secrets.
+
+From this directory, run Air:
 
 ```sh
-go run ./cmd/background
-```
-
-For live reload, install [Air](https://github.com/air-verse/air) and run it from this directory:
-
-```sh
-go install github.com/air-verse/air@latest
 air -c .air.toml
 ```
 
-Air rebuilds the worker into `build/` whenever Go source files change. The build output is ignored by Git.
+Air loads `../.env.dev`, rebuilds the worker into `build/`, and restarts it when Go source files change. If you run the worker directly with `go run ./cmd/background`, provide `REDIS_ADDR` and `REDIS_PASSWORD` in the shell environment first.
+
+Install [Air](https://github.com/air-verse/air) if it is not already available:
+
+```sh
+go install github.com/air-verse/air@latest
+```
+
+The build output is ignored by Git.
 
 The task producer can use the shared task type and payload from `pkg/tasks` with an Asynq client configured with the same Redis address and password.
