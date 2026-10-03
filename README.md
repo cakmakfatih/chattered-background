@@ -10,7 +10,7 @@ From the Chattered repository root, start this service and its dependencies with
 docker compose -f docker/compose.dev.yml up --build background
 ```
 
-The worker has no network listener or published host port. It connects to the `redis` Compose service using `REDIS_ADDR` and `REDIS_PASSWORD` from the root `.env.dev` file.
+The service exposes `GET /ping` on its internal HTTP port `8080` and returns plain-text `pong`. The Compose service does not publish a host port; other containers on the development network, including Caddy, can reach it at `background:8080`. The worker connects to the `redis` Compose service using `REDIS_ADDR` and `REDIS_PASSWORD` from the root `.env.dev` file.
 
 ## Task types
 
