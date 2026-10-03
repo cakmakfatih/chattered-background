@@ -2,6 +2,18 @@
 
 Redis-backed background task worker for Chattered, implemented with Asynq.
 
+## Local environment configuration
+
+The root local Compose stack reads both `REDIS_ADDR` and `REDIS_PASSWORD` from the root `.env.local` file, which uses the same schema as the existing root `.env.dev` file. Root Compose provides those values to Background and Redis; it does not load `background/.env.local`.
+
+For optional component-local commands or tooling that explicitly load a component environment file, the ignored `background/.env.local` contains only the Redis address used inside the Compose network:
+
+```dotenv
+REDIS_ADDR=redis:6379
+```
+
+The worker still requires both variables at runtime. When running it outside root Compose, provide `REDIS_PASSWORD` separately rather than duplicating the shared credential in `background/.env.local`.
+
 ## Run with the Chattered development stack
 
 From the Chattered repository root, start this service and its dependencies with:
