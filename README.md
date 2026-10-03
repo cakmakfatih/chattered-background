@@ -26,4 +26,13 @@ Set `REDIS_ADDR` and `REDIS_PASSWORD` in the environment, then run:
 go run ./cmd/background
 ```
 
+For live reload, install [Air](https://github.com/air-verse/air) and run it from this directory:
+
+```sh
+go install github.com/air-verse/air@latest
+air -c .air.toml
+```
+
+Air rebuilds the worker into `build/` whenever Go source files change. The build output is ignored by Git.
+
 The task producer can use the shared task type and payload from `pkg/tasks` with an Asynq client configured with the same Redis address and password.

@@ -1,0 +1,22 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+pre_cmd = ["mkdir -p build"]
+cmd = "go build -o ./build/background ./cmd/background"
+entrypoint = ["./build/background"]
+include_ext = ["go"]
+exclude_dir = ["build", "tmp", "vendor"]
+delay = 1000
+stop_on_error = true
+
+[build.windows]
+pre_cmd = ["if not exist build mkdir build"]
+cmd = "go build -o ./build/background.exe ./cmd/background"
+entrypoint = ["build\\background.exe"]
+
+[log]
+time = true
+
+[misc]
+clean_on_exit = true
